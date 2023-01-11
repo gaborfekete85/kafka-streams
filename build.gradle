@@ -1,0 +1,47 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.kafka:kafka-streams:2.2.1'
+    implementation 'org.apache.kafka:kafka-clients:2.2.1'
+    implementation group: 'org.rocksdb', name: 'rocksdbjni', version: '7.0.3'
+
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+application {
+    mainClassName = 'com.fintama.kafka.streaming.StreamsMain'
+}
+
+task(runStreams, dependsOn: 'classes', type: JavaExec) {
+   main = 'com.fintama.kafka.streaming.StreamsMain'
+   classpath = sourceSets.main.runtimeClasspath
+}
+
+task(runStatelessTransformations, dependsOn: 'classes', type: JavaExec) {
+    main = 'com.fintama.kafka.streaming.StatelessTransformationsMain'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task(runAggregations, dependsOn: 'classes', type: JavaExec) {
+   main = 'com.fintama.kafka.streaming.AggregationsMain'
+   classpath = sourceSets.main.runtimeClasspath
+}
+
+task(runJoins, dependsOn: 'classes', type: JavaExec) {
+   main = 'com.fintama.kafka.streaming.JoinsMain'
+   classpath = sourceSets.main.runtimeClasspath
+}
+
+task(runWindowing, dependsOn: 'classes', type: JavaExec) {
+   main = 'com.fintama.kafka.streaming.WindowingMain'
+   classpath = sourceSets.main.runtimeClasspath
+}
